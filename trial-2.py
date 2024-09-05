@@ -23,13 +23,14 @@ BACKGROUND = (217, 215, 211)
 RED = (255, 0, 0)
 YELLOW = (221, 170, 34)
 image_surface = pygame.image.load(
-    "/Users/andylenguyen/Documents/PYTHON/Clock/night.png")
-image_surface = pygame.transform.scale(image_surface, (280, 200))
+    "/Users/andylenguyen/Documents/A-day-by-Andy/night.png")
+image_surface = pygame.transform.scale(
+    image_surface, (220, 200))
 
 
 def numbers(number, size, position):
     font = pygame.font.Font(
-        "/Users/andylenguyen/Documents/PYTHON/Clock/Dubai-Regular.ttf", size)
+        "/Users/andylenguyen/Documents/A-day-by-Andy/Dubai-Regular.ttf", size)
     text = font.render(number, True, CLOCK)
     text_rect = text.get_rect(center=(position))
     screen.blit(text, text_rect)
@@ -38,12 +39,12 @@ def numbers(number, size, position):
 def polar_to_cartesian(radius, theta):
     x = radius * sin(pi * theta / 180)
     y = radius * cos(pi * theta / 180)
-    return x + WIDTH / 2, -(y - HEIGHT / 2)
+    return x + WIDTH / 2, - (y - HEIGHT / 2)
 
 
 def write_description(text, size, position, font_file, text_rotate_degress=0, align="center"):
     font = pygame.font.Font(
-        "/Users/andylenguyen/Documents/PYTHON/Clock/calibri-regular.ttf", size)
+        "/Users/andylenguyen/Documents/A-day-by-Andy/calibri-regular.ttf", size)
     text_surface = font.render(text, True, CLOCK)
     rotated_text_surface = pygame.transform.rotate(
         text_surface, text_rotate_degress)
@@ -58,6 +59,23 @@ def write_description(text, size, position, font_file, text_rotate_degress=0, al
         text_rect.center = position
 
     screen.blit(text_surface, text_rect)
+
+
+def update_background():
+    currenthour = datetime.datetime.now().hour
+
+    # night
+    if 6 < currenthour < 14:
+        pass
+    # afternoon
+    elif 14 <= currenthour < 16:
+        pass
+    # morning
+    elif 12 <= currenthour < 6:
+        pass
+    # noon
+    else:
+        pass
 
 
 def main():
@@ -100,19 +118,24 @@ def main():
                 clock_radius - 40, theta), polar_to_cartesian(clock_radius - 335, theta), 3)
 
         # description
-        screen.blit(image_surface, (WIDTH / 2 + 300, HEIGHT / 2 - 70))
+        screen.blit(image_surface, (WIDTH / 2 + 30, HEIGHT / 2 - 300))
         write_description(u"Sleep", 40, (WIDTH / 2 + 300, HEIGHT / 2 - 60),
-                          "/Users/andylenguyen/Documents/PYTHON/Clock/Dubai-Regular.ttf", 8, 'right')
+                          "/Users/andylenguyen/Documents/A-day-by-Andy/Dubai-Regular.ttf", 8, 'right')
         write_description(u"Breakfast", 35, (WIDTH / 2 + 280, HEIGHT / 2 + 160),
-                          "/Users/andylenguyen/Documents/PYTHON/Clock/Dubai-Regular.ttf", 100, 'right')
+                          "/Users/andylenguyen/Documents/A-day-by-Andy/Dubai-Regular.ttf", 100, 'right')
         write_description(u"Study", 40, (WIDTH / 2 + 120, HEIGHT / 2 + 200),
-                          "/Users/andylenguyen/Documents/PYTHON/Clock/Dubai-Regular.ttf", 100, 'right')
-        write_description(u"Lunch", 35, (WIDTH / 2 - 10, HEIGHT / 2 + 200),
-                          "/Users/andylenguyen/Documents/PYTHON/Clock/Dubai-Regular.ttf", 100, 'right')
+                          "/Users/andylenguyen/Documents/A-day-by-Andy/Dubai-Regular.ttf", 100, 'right')
+        write_description(u"Lunch", 35, (WIDTH / 2 - 5, HEIGHT / 2 + 200),
+                          "/Users/andylenguyen/Documents/A-day-by-Andy/Dubai-Regular.ttf", 100, 'right')
         write_description(u"Study", 40, (WIDTH / 2 - 150, HEIGHT / 2 + 160),
-                          "/Users/andylenguyen/Documents/PYTHON/Clock/Dubai-Regular.ttf", 100, 'right')
+                          "/Users/andylenguyen/Documents/A-day-by-Andy/Dubai-Regular.ttf", 100, 'right')
         write_description(u"Dinner", 40, (WIDTH / 2 - 150, HEIGHT / 2 - 130),
-                          "/Users/andylenguyen/Documents/PYTHON/Clock/Dubai-Regular.ttf", 100, 'right')
+                          "/Users/andylenguyen/Documents/A-day-by-Andy/Dubai-Regular.ttf", 100, 'right')
+        write_description(u"Study", 35, (WIDTH / 2 - 80, HEIGHT / 2 - 280),
+                          "/Users/andylenguyen/Documents/A-day-by-Andy/Dubai-Regular.ttf", 100, 'right')
+
+        # change background based on time
+        # screen.blit(update_background(), (0, 0))
 
         # clock time
         current = datetime.datetime.now()
@@ -122,12 +145,12 @@ def main():
 
         r = 130
         theta = (hour + minute / 60 + second / 3600) * (360 / 24)
-        pygame.draw.line(screen, CLOCK, center,
+        pygame.draw.line(screen, YELLOW, center,
                          polar_to_cartesian(r, theta), 14)
 
         r = 280
         theta = (minute + second / 60) * (360 / 60)
-        pygame.draw.line(screen, CLOCK, center,
+        pygame.draw.line(screen, YELLOW, center,
                          polar_to_cartesian(r, theta), 10)
 
         r = 340
@@ -143,7 +166,7 @@ def main():
             center[1]), clock_radius - 350, YELLOW)
         pygame.draw.circle(screen, CLOCK, center, clock_radius - 350, 2)
         write_description("START", 30, (WIDTH/2, HEIGHT/2 + 3),
-                          "/Users/andylenguyen/Documents/PYTHON/Clock/Dubai-Regular.ttf'", 0)
+                          "/Users/andylenguyen/Documents/A-day-by-Andy/Dubai-Regular.ttf'", 0)
 
         pygame.display.update()
         pygame.display.flip()
